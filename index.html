@@ -202,12 +202,15 @@
   .chip:hover { color: var(--navy); border-color: var(--blue); }
   .chip.active { background: var(--brand); color: #fff; border-color: transparent; }
   .prod-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-  .prod { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; display: flex; flex-direction: column; transition: transform .2s, border-color .2s, box-shadow .2s; }
+  .prod { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 0; display: flex; flex-direction: column; overflow: hidden; transition: transform .2s, border-color .2s, box-shadow .2s; }
   .prod:hover { transform: translateY(-3px); border-color: var(--blue); box-shadow: var(--shadow-sm); }
-  .prod-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-  .prod-cat { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
-  .temp-tag { font-family: 'Archivo'; font-weight: 800; font-size: 12.5px; padding: 4px 10px; border-radius: 100px; background: rgba(31,155,224,.1); color: var(--blue); border: 1px solid rgba(31,155,224,.25); }
-  .temp-tag.hot { background: rgba(22,38,122,.08); color: var(--navy); border-color: rgba(22,38,122,.2); }
+  .prod:hover .prod-img img { transform: scale(1.05); }
+  .prod-img { position: relative; aspect-ratio: 4 / 3; background: var(--bg-3); overflow: hidden; }
+  .prod-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
+  .prod-body { padding: 18px 20px 20px; display: flex; flex-direction: column; flex: 1; }
+  .prod-cat { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
+  .temp-tag { position: absolute; top: 12px; right: 12px; font-family: 'Archivo'; font-weight: 800; font-size: 12.5px; padding: 5px 11px; border-radius: 100px; background: rgba(255,255,255,.94); backdrop-filter: blur(4px); color: var(--blue); box-shadow: 0 4px 14px -4px rgba(16,38,122,.4); }
+  .temp-tag.hot { color: var(--navy); }
   .prod h4 { font-size: 17px; margin-bottom: 8px; }
   .prod p { font-size: 13.5px; color: var(--body); margin-bottom: 16px; flex: 1; }
   .prod-foot { display: flex; align-items: center; justify-content: space-between; padding-top: 14px; border-top: 1px solid var(--line); }
@@ -676,48 +679,48 @@
 
   const PRODUCTS = [
     // --- Ceramic fiber (high-temp insulation) ---
-    { name: 'Ceramic Fiber Blanket', cat: 'insulation', tag: 'Furnace lining', temp: '1260°C', spec: '128 kg/m³ · 7.6m×0.61m', desc: 'Lightweight, flexible alumina-silica blanket for furnace lining, kilns, boilers and fire protection. 25mm & 50mm.' },
-    { name: 'Ceramic Fiber Board', cat: 'insulation', tag: 'Rigid board', temp: '1260°C', spec: '320 kg/m³ · 600×300×50', desc: 'Rigid alumina-silica panel for furnace linings, fire protection and high-temperature insulation. Strong and durable.' },
+    { name: 'Ceramic Fiber Blanket', img: 'ceramic-fiber-blanket', cat: 'insulation', tag: 'Furnace lining', temp: '1260°C', spec: '128 kg/m³ · 7.6m×0.61m', desc: 'Lightweight, flexible alumina-silica blanket for furnace lining, kilns, boilers and fire protection. 25mm & 50mm.' },
+    { name: 'Ceramic Fiber Board', img: 'ceramic-fiber-board', cat: 'insulation', tag: 'Rigid board', temp: '1260°C', spec: '320 kg/m³ · 600×300×50', desc: 'Rigid alumina-silica panel for furnace linings, fire protection and high-temperature insulation. Strong and durable.' },
     // --- Rockwool ---
-    { name: 'Rockwool Roll / Blanket', cat: 'insulation', tag: 'Stone wool', temp: '1000°C', spec: '100 kg/m³ · wire mesh', desc: 'Fire-resistant basalt blanket with steel wire mesh for tanks, pipes and ducts. 6m×1m, 50/75/100mm.' },
-    { name: 'Rockwool Batts / Slabs', cat: 'insulation', tag: 'Rigid slab', temp: '1000°C', spec: '50 kg/m³ · 1.2×0.6m', desc: 'Rigid basalt panels for thermal, acoustic and fire protection in walls, roofs, floors and plant.' },
-    { name: 'Preformed Rockwool Pipe', cat: 'insulation', tag: 'Pipe lagging', temp: '1000°C', spec: '150 kg/m³ · ½"–6" bore', desc: 'Preformed cylindrical sections for thermal and fire lagging of hot and cold piping systems.' },
+    { name: 'Rockwool Roll / Blanket', img: 'rockwool-roll', cat: 'insulation', tag: 'Stone wool', temp: '1000°C', spec: '100 kg/m³ · wire mesh', desc: 'Fire-resistant basalt blanket with steel wire mesh for tanks, pipes and ducts. 6m×1m, 50/75/100mm.' },
+    { name: 'Rockwool Batts / Slabs', img: 'rockwool-batts', cat: 'insulation', tag: 'Rigid slab', temp: '1000°C', spec: '50 kg/m³ · 1.2×0.6m', desc: 'Rigid basalt panels for thermal, acoustic and fire protection in walls, roofs, floors and plant.' },
+    { name: 'Preformed Rockwool Pipe', img: 'preformed-rockwool-pipe', cat: 'insulation', tag: 'Pipe lagging', temp: '1000°C', spec: '150 kg/m³ · ½"–6" bore', desc: 'Preformed cylindrical sections for thermal and fire lagging of hot and cold piping systems.' },
     // --- Fiberglass ---
-    { name: 'Fiberglass Roll / Blanket', cat: 'insulation', tag: 'Glasswool', temp: '350–450°C', spec: '24 kg/m³ · 20m×1.2m', desc: 'Lightweight glasswool for roofing, ducting, HVAC, walls — with or without aluminium foil facing.' },
-    { name: 'Fiberglass Batts / Slabs', cat: 'insulation', tag: 'Glasswool', temp: '350–450°C', spec: '32 kg/m³ · 1.2×0.6m', desc: 'Pre-cut non-combustible panels for walls, ceilings, partitions and HVAC. Easy to install.' },
+    { name: 'Fiberglass Roll / Blanket', img: 'fiberglass-roll', cat: 'insulation', tag: 'Glasswool', temp: '350–450°C', spec: '24 kg/m³ · 20m×1.2m', desc: 'Lightweight glasswool for roofing, ducting, HVAC, walls — with or without aluminium foil facing.' },
+    { name: 'Fiberglass Batts / Slabs', img: 'fiberglass-batts', cat: 'insulation', tag: 'Glasswool', temp: '350–450°C', spec: '32 kg/m³ · 1.2×0.6m', desc: 'Pre-cut non-combustible panels for walls, ceilings, partitions and HVAC. Easy to install.' },
     // --- Other insulation ---
-    { name: 'Armaflex Sheet & Roll', cat: 'insulation', tag: 'Condensation', temp: '−40→120°C', spec: '80 kg/m³ · plain/foil', desc: 'Closed-cell elastomeric foam with vapour barrier for chilled lines, HVAC and condensation control.' },
-    { name: 'Calcium Silicate Board', cat: 'insulation', tag: 'Hot-face', temp: '1100°C', spec: 'Rigid · 600×300×50', desc: 'High-strength, water-resistant board for furnace linings, boiler insulation and fire-rated panels.' },
-    { name: 'Vermiculite', cat: 'insulation', tag: 'Loose-fill', temp: '1100°C', spec: 'Medium/large · 10kg bag', desc: 'Non-combustible exfoliated mineral for fireproofing, loose-fill insulation and refractory mixes.' },
-    { name: 'Styrofoam (EPS)', cat: 'insulation', tag: 'Polystyrene', temp: '—', spec: '1.2×1.2m · ½"–4"', desc: 'Flexible and rigid expanded polystyrene for roofs, walls, floors, cold rooms and packaging.' },
-    { name: 'Polyethylene Roof Insulation', cat: 'insulation', tag: 'Reflective foil', temp: '—', spec: 'Double-laminated · 40m×1.5m', desc: 'Closed-cell foam with reflective foil — radiant heat barrier and moisture barrier under roofing.' },
-    { name: 'Aluminium Foil FSK & Tapes', cat: 'insulation', tag: 'Vapour barrier', temp: '—', spec: 'FSK · butyl · thermal', desc: 'Reflective FSK foil facing plus aluminium thermal and butyl waterproof sealing tapes.' },
+    { name: 'Armaflex Sheet & Roll', img: 'armaflex', cat: 'insulation', tag: 'Condensation', temp: '−40→120°C', spec: '80 kg/m³ · plain/foil', desc: 'Closed-cell elastomeric foam with vapour barrier for chilled lines, HVAC and condensation control.' },
+    { name: 'Calcium Silicate Board', img: 'calcium-silicate', cat: 'insulation', tag: 'Hot-face', temp: '1100°C', spec: 'Rigid · 600×300×50', desc: 'High-strength, water-resistant board for furnace linings, boiler insulation and fire-rated panels.' },
+    { name: 'Vermiculite', img: 'vermiculite', cat: 'insulation', tag: 'Loose-fill', temp: '1100°C', spec: 'Medium/large · 10kg bag', desc: 'Non-combustible exfoliated mineral for fireproofing, loose-fill insulation and refractory mixes.' },
+    { name: 'Styrofoam (EPS)', img: 'styrofoam', cat: 'insulation', tag: 'Polystyrene', temp: '—', spec: '1.2×1.2m · ½"–4"', desc: 'Flexible and rigid expanded polystyrene for roofs, walls, floors, cold rooms and packaging.' },
+    { name: 'Polyethylene Roof Insulation', img: 'pe-roof', cat: 'insulation', tag: 'Reflective foil', temp: '—', spec: 'Double-laminated · 40m×1.5m', desc: 'Closed-cell foam with reflective foil — radiant heat barrier and moisture barrier under roofing.' },
+    { name: 'Aluminium Foil FSK & Tapes', img: 'alu-foil', cat: 'insulation', tag: 'Vapour barrier', temp: '—', spec: 'FSK · butyl · thermal', desc: 'Reflective FSK foil facing plus aluminium thermal and butyl waterproof sealing tapes.' },
     // --- Ceramic sealing / gaskets ---
-    { name: 'Ceramic Fiber Rope', cat: 'sealing', tag: 'Round & square', temp: '1260°C', spec: '6–50mm thick', desc: 'Heat-resistant ceramic rope for sealing kilns, furnaces, stoves and boiler doors.' },
-    { name: 'Ceramic Fiber Cloth', cat: 'sealing', tag: 'Plain & foil', temp: '1260°C', spec: '30m×1m×3mm', desc: 'Woven ceramic fabric for heat shielding, expansion joints and fire protection — plain or foil-backed.' },
-    { name: 'Ceramic Fiber Tape', cat: 'sealing', tag: 'Sealing tape', temp: '1260°C', spec: '10m×50mm×3mm', desc: 'Flexible ceramic tape for wrapping and sealing pipes, flanges and furnace doors. Custom lengths.' },
-    { name: 'Ceramic Fiber Yarn / Thread', cat: 'sealing', tag: 'Reinforcement', temp: '1260°C', spec: 'Twisted fiber', desc: 'High-tensile ceramic yarn for stitching insulation, gasketing, packing and furnace applications.' },
-    { name: 'Gland Packing', cat: 'sealing', tag: 'PTFE / Aramid', temp: 'High temp', spec: 'Graphited / Kevlar', desc: 'PTFE, aramid/Kevlar and graphited gland packing for valves and pumps on steam and hot fluids.' },
-    { name: 'Steel Metallic Steam Gasket', cat: 'sealing', tag: 'Superlite 5000', temp: '500–650°C', spec: '1.5–6mm · 1.5×1m', desc: 'Precision steel gaskets for high-pressure, high-temperature steam and flange systems.' },
-    { name: 'Asbestos Millboard', cat: 'sealing', tag: 'Gasket board', temp: '1100°C', spec: '1×1m · 3–12mm', desc: 'Rigid compressed-fibre board for fire doors, furnace linings, boilers and cut gaskets.' },
+    { name: 'Ceramic Fiber Rope', img: 'ceramic-rope', cat: 'sealing', tag: 'Round & square', temp: '1260°C', spec: '6–50mm thick', desc: 'Heat-resistant ceramic rope for sealing kilns, furnaces, stoves and boiler doors.' },
+    { name: 'Ceramic Fiber Cloth', img: 'ceramic-cloth', cat: 'sealing', tag: 'Plain & foil', temp: '1260°C', spec: '30m×1m×3mm', desc: 'Woven ceramic fabric for heat shielding, expansion joints and fire protection — plain or foil-backed.' },
+    { name: 'Ceramic Fiber Tape', img: 'ceramic-tape', cat: 'sealing', tag: 'Sealing tape', temp: '1260°C', spec: '10m×50mm×3mm', desc: 'Flexible ceramic tape for wrapping and sealing pipes, flanges and furnace doors. Custom lengths.' },
+    { name: 'Ceramic Fiber Yarn / Thread', img: 'ceramic-yarn', cat: 'sealing', tag: 'Reinforcement', temp: '1260°C', spec: 'Twisted fiber', desc: 'High-tensile ceramic yarn for stitching insulation, gasketing, packing and furnace applications.' },
+    { name: 'Gland Packing', img: 'gland-packing', cat: 'sealing', tag: 'PTFE / Aramid', temp: 'High temp', spec: 'Graphited / Kevlar', desc: 'PTFE, aramid/Kevlar and graphited gland packing for valves and pumps on steam and hot fluids.' },
+    { name: 'Steel Metallic Steam Gasket', img: 'steam-gasket', cat: 'sealing', tag: 'Superlite 5000', temp: '500–650°C', spec: '1.5–6mm · 1.5×1m', desc: 'Precision steel gaskets for high-pressure, high-temperature steam and flange systems.' },
+    { name: 'Asbestos Millboard', img: 'millboard', cat: 'sealing', tag: 'Gasket board', temp: '1100°C', spec: '1×1m · 3–12mm', desc: 'Rigid compressed-fibre board for fire doors, furnace linings, boilers and cut gaskets.' },
     // --- Acoustic ---
-    { name: 'Knauf Acoustic Roll', cat: 'acoustic', tag: 'Soundproofing', temp: '—', spec: 'Mineral wool', desc: 'Dense acoustic mineral wool rolls for sound absorption in studios, walls, halls and ducts.' },
-    { name: 'Acoustic Foam Wedges', cat: 'acoustic', tag: 'Panels', temp: '—', spec: 'Wedge / panel', desc: 'Profiled acoustic foam wedges and panels for noise control and echo reduction.' },
+    { name: 'Knauf Acoustic Roll', img: 'knauf-acoustic', cat: 'acoustic', tag: 'Soundproofing', temp: '—', spec: 'Mineral wool', desc: 'Dense acoustic mineral wool rolls for sound absorption in studios, walls, halls and ducts.' },
+    { name: 'Acoustic Foam Wedges', img: 'acoustic-foam', cat: 'acoustic', tag: 'Panels', temp: '—', spec: 'Wedge / panel', desc: 'Profiled acoustic foam wedges and panels for noise control and echo reduction.' },
     // --- Refractory firebricks ---
-    { name: '40% Alumina Firebrick', cat: 'refractory', tag: 'Firebrick', temp: '1600°C', spec: '230×115×75mm', desc: 'Balanced-duty firebrick for furnace linings — standard, arch, slab and split shapes.' },
-    { name: '70% Alumina Firebrick', cat: 'refractory', tag: 'High duty', temp: '1800°C', spec: '5.2 kg · 230×115×75', desc: 'High-alumina brick with strong slag and chemical resistance for steel furnaces, kilns and boilers.' },
-    { name: 'Zirconia Firebrick', cat: 'refractory', tag: 'Top duty', temp: '2000°C', spec: '2.2 kg · 230×115×38', desc: 'Zirconium-oxide brick for glass furnaces, steel ladles and the most extreme high-temperature kilns.' },
-    { name: 'Insulating Firebrick', cat: 'refractory', tag: 'Lightweight', temp: 'High temp', spec: '2 kg · low density', desc: 'Lightweight, low-conductivity brick that cuts heat loss in kilns, ovens, chimneys and furnaces.' },
-    { name: 'Acid-Resistant Brick', cat: 'refractory', tag: 'Chemical', temp: 'Acid-proof', spec: '230×115×38mm', desc: 'Corrosion-resistant brick and tile for acid and chemical-attack environments.' },
+    { name: '40% Alumina Firebrick', img: 'firebrick-40', cat: 'refractory', tag: 'Firebrick', temp: '1600°C', spec: '230×115×75mm', desc: 'Balanced-duty firebrick for furnace linings — standard, arch, slab and split shapes.' },
+    { name: '70% Alumina Firebrick', img: 'firebrick-70', cat: 'refractory', tag: 'High duty', temp: '1800°C', spec: '5.2 kg · 230×115×75', desc: 'High-alumina brick with strong slag and chemical resistance for steel furnaces, kilns and boilers.' },
+    { name: 'Zirconia Firebrick', img: 'zirconia', cat: 'refractory', tag: 'Top duty', temp: '2000°C', spec: '2.2 kg · 230×115×38', desc: 'Zirconium-oxide brick for glass furnaces, steel ladles and the most extreme high-temperature kilns.' },
+    { name: 'Insulating Firebrick', img: 'insulating-brick', cat: 'refractory', tag: 'Lightweight', temp: 'High temp', spec: '2 kg · low density', desc: 'Lightweight, low-conductivity brick that cuts heat loss in kilns, ovens, chimneys and furnaces.' },
+    { name: 'Acid-Resistant Brick', img: 'acid-brick', cat: 'refractory', tag: 'Chemical', temp: 'Acid-proof', spec: '230×115×38mm', desc: 'Corrosion-resistant brick and tile for acid and chemical-attack environments.' },
     // --- Refractory cements ---
-    { name: 'Maxheat A Castable', cat: 'refractory', tag: 'Castable cement', temp: '1750°C', spec: '90% alumina', desc: 'High-purity, fast-setting castable for furnaces, kilns, boilers and incinerators at extreme temperatures.' },
-    { name: 'Maxheat K Castable', cat: 'refractory', tag: 'Castable cement', temp: '1600°C', spec: '60% alumina', desc: 'Medium-duty castable with good thermal stability and abrasion resistance for general refractory work.' },
-    { name: 'Maxlyte 11 Insulating', cat: 'refractory', tag: 'Insulating castable', temp: '1300°C', spec: 'Lightweight', desc: 'Lightweight insulating refractory cement with low conductivity for energy-efficient linings.' },
-    { name: 'Refractory Mortar (Maxset 50)', cat: 'refractory', tag: 'Jointing', temp: '1500°C', spec: 'Fine fire-clay', desc: 'Alumina/fireclay mortar for bonding firebricks in kilns, furnaces, fireplaces and ovens.' },
-    { name: 'Fondu Max-50 Cement', cat: 'refractory', tag: 'Calcium aluminate', temp: '1000°C', spec: 'Fast set', desc: 'Rapid-strength calcium-aluminate cement for kiln repairs, linings and abrasion-resistant floors.' },
-    { name: 'Somafix Heat Sealant', cat: 'refractory', tag: 'Sealant & foam', temp: '1500°C', spec: 'Sealant / PU foam', desc: 'Heat-resistant silicone sealant and expanding PU foam for sealing, bonding and filling joints.' },
+    { name: 'Maxheat A Castable', img: 'maxheat-a', cat: 'refractory', tag: 'Castable cement', temp: '1750°C', spec: '90% alumina', desc: 'High-purity, fast-setting castable for furnaces, kilns, boilers and incinerators at extreme temperatures.' },
+    { name: 'Maxheat K Castable', img: 'maxheat-k', cat: 'refractory', tag: 'Castable cement', temp: '1600°C', spec: '60% alumina', desc: 'Medium-duty castable with good thermal stability and abrasion resistance for general refractory work.' },
+    { name: 'Maxlyte 11 Insulating', img: 'maxlyte', cat: 'refractory', tag: 'Insulating castable', temp: '1300°C', spec: 'Lightweight', desc: 'Lightweight insulating refractory cement with low conductivity for energy-efficient linings.' },
+    { name: 'Refractory Mortar (Maxset 50)', img: 'mortar', cat: 'refractory', tag: 'Jointing', temp: '1500°C', spec: 'Fine fire-clay', desc: 'Alumina/fireclay mortar for bonding firebricks in kilns, furnaces, fireplaces and ovens.' },
+    { name: 'Fondu Max-50 Cement', img: 'fondu', cat: 'refractory', tag: 'Calcium aluminate', temp: '1000°C', spec: 'Fast set', desc: 'Rapid-strength calcium-aluminate cement for kiln repairs, linings and abrasion-resistant floors.' },
+    { name: 'Somafix Heat Sealant', img: 'somafix', cat: 'refractory', tag: 'Sealant & foam', temp: '1500°C', spec: 'Sealant / PU foam', desc: 'Heat-resistant silicone sealant and expanding PU foam for sealing, bonding and filling joints.' },
     // --- Electrical ---
-    { name: 'H.V Electrical Rubber Mat', cat: 'electrical', tag: 'Duratuf · ASTM D178', temp: '10–50 kV', spec: 'Class 0–4 · 1×1m', desc: 'Insulating rubber matting for substations and control rooms. Class 0 (10kV) to Class 4 (50kV), anti-slip.' }
+    { name: 'H.V Electrical Rubber Mat', img: 'hv-mat', cat: 'electrical', tag: 'Duratuf · ASTM D178', temp: '10–50 kV', spec: 'Class 0–4 · 1×1m', desc: 'Insulating rubber matting for substations and control rooms. Class 0 (10kV) to Class 4 (50kV), anti-slip.' }
   ];
 
   const grid = document.getElementById('prodGrid');
@@ -727,17 +730,20 @@
       .filter(p => filter === 'all' || p.cat === filter)
       .map(p => `
         <article class="prod">
-          <div class="prod-top">
-            <span class="prod-cat">${p.tag}</span>
+          <div class="prod-img">
+            <img src="images/${p.img}.jpg" alt="${p.name}" loading="lazy" width="640" height="480" />
             <span class="temp-tag ${isHot(p.temp) ? 'hot' : ''}">${p.temp === '—' ? 'General' : p.temp}</span>
           </div>
-          <h4>${p.name}</h4>
-          <p>${p.desc}</p>
-          <div class="prod-foot">
-            <span class="prod-spec">${p.spec}</span>
-            <a class="prod-quote" href="https://wa.me/254722706416?text=${encodeURIComponent('Hi Kenworks, I would like a quote for: ' + p.name)}" target="_blank" rel="noopener">Quote
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
+          <div class="prod-body">
+            <span class="prod-cat">${p.tag}</span>
+            <h4>${p.name}</h4>
+            <p>${p.desc}</p>
+            <div class="prod-foot">
+              <span class="prod-spec">${p.spec}</span>
+              <a class="prod-quote" href="https://wa.me/254722706416?text=${encodeURIComponent('Hi Kenworks, I would like a quote for: ' + p.name)}" target="_blank" rel="noopener">Quote
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
           </div>
         </article>`).join('');
     grid.querySelectorAll('.prod').forEach(el => el.classList.add('in'));
