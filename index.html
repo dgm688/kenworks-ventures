@@ -220,16 +220,20 @@
   .prod { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 0; display: flex; flex-direction: column; overflow: hidden; transition: transform .2s, border-color .2s, box-shadow .2s; }
   .prod:hover { transform: translateY(-3px); border-color: var(--blue); box-shadow: var(--shadow-sm); }
   .prod:hover .prod-img img { transform: scale(1.05); }
-  .prod-img { position: relative; aspect-ratio: 4 / 3; background: var(--bg-3); overflow: hidden; }
+  .prod-img { display: block; position: relative; aspect-ratio: 4 / 3; background: var(--bg-3); overflow: hidden; }
   .prod-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
   .prod-body { padding: 18px 20px 20px; display: flex; flex-direction: column; flex: 1; }
   .prod-cat { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
   .temp-tag { position: absolute; top: 12px; right: 12px; font-family: 'Archivo'; font-weight: 800; font-size: 12.5px; padding: 5px 11px; border-radius: 100px; background: rgba(255,255,255,.94); backdrop-filter: blur(4px); color: var(--blue); box-shadow: 0 4px 14px -4px rgba(16,38,122,.4); }
   .temp-tag.hot { color: var(--navy); }
   .prod h4 { font-size: 17px; margin-bottom: 8px; }
+  .prod h4 a { color: var(--ink); transition: color .2s; }
+  .prod h4 a:hover { color: var(--blue); }
   .prod p { font-size: 13.5px; color: var(--body); margin-bottom: 16px; flex: 1; }
   .prod-foot { display: flex; align-items: center; justify-content: space-between; padding-top: 14px; border-top: 1px solid var(--line); }
   .prod-spec { font-size: 12px; color: var(--muted); font-weight: 600; }
+  .prod-spec-link { font-size: 12.5px; color: var(--navy); font-weight: 700; transition: color .2s; }
+  .prod-spec-link:hover { color: var(--blue); }
   .prod-quote { font-size: 13px; font-weight: 700; color: var(--blue); display: inline-flex; align-items: center; gap: 5px; }
   .prod-quote:hover { color: var(--navy); }
 
@@ -773,16 +777,16 @@
     grid.innerHTML = matches
       .map(p => `
         <article class="prod">
-          <div class="prod-img">
-            <img src="images/${p.img}.jpg" alt="${p.name}" loading="lazy" width="640" height="480" />
+          <a class="prod-img" href="products/${p.img}.html" aria-label="${p.name} — view specs &amp; price">
+            <img src="images/${p.img}.jpg" alt="${p.name} supplier in Nairobi, Kenya — Kenworks Ventures" loading="lazy" width="640" height="480" />
             <span class="temp-tag ${isHot(p.temp) ? 'hot' : ''}">${p.temp === '—' ? 'General' : p.temp}</span>
-          </div>
+          </a>
           <div class="prod-body">
             <span class="prod-cat">${p.tag}</span>
-            <h4>${p.name}</h4>
+            <h4><a href="products/${p.img}.html">${p.name}</a></h4>
             <p>${p.desc}</p>
             <div class="prod-foot">
-              <span class="prod-spec">${p.spec}</span>
+              <a class="prod-spec-link" href="products/${p.img}.html">View specs &amp; price</a>
               <a class="prod-quote" href="https://wa.me/254722706416?text=${encodeURIComponent('Hi Kenworks, I would like a quote for: ' + p.name)}" target="_blank" rel="noopener">Quote
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </a>

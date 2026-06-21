@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dgm688.github.io/kenworks-ventures/sitemap.xml
