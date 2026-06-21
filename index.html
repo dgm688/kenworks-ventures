@@ -197,7 +197,22 @@
   .div-card li::before { content: ""; width: 6px; height: 6px; border-radius: 2px; background: var(--blue); margin-top: 7px; flex: 0 0 auto; }
 
   /* Products */
-  .filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 32px; }
+  .search-bar { position: relative; display: flex; align-items: center; margin-bottom: 18px; max-width: 560px; }
+  .search-bar .search-ico { position: absolute; left: 17px; width: 20px; height: 20px; color: var(--muted); pointer-events: none; }
+  .search-bar input { width: 100%; font-family: 'Inter'; font-size: 15px; color: var(--ink); background: #fff; border: 1px solid var(--line-2); border-radius: 100px; padding: 14px 46px 14px 46px; transition: border-color .2s, box-shadow .2s; -webkit-appearance: none; appearance: none; }
+  .search-bar input::placeholder { color: var(--muted); }
+  .search-bar input:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(31,155,224,.14); }
+  .search-bar input::-webkit-search-decoration, .search-bar input::-webkit-search-cancel-button { -webkit-appearance: none; }
+  .search-clear { position: absolute; right: 12px; width: 28px; height: 28px; border: none; border-radius: 50%; background: var(--bg-3); color: var(--navy); display: grid; place-items: center; cursor: pointer; transition: background .2s; }
+  .search-clear:hover { background: var(--line-2); }
+  .search-clear svg { width: 15px; height: 15px; }
+  .prod-count { font-size: 13.5px; color: var(--muted); font-weight: 500; margin: 0 0 18px; min-height: 18px; }
+  .prod-count b { color: var(--navy); font-weight: 700; }
+  .prod-empty { text-align: center; padding: 48px 20px; color: var(--body); }
+  .prod-empty svg { width: 40px; height: 40px; color: var(--line-2); margin: 0 auto 14px; }
+  .prod-empty p { font-size: 16px; }
+  .prod-empty a { color: var(--blue); font-weight: 600; }
+  .filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
   .chip { font-family: 'Inter'; font-weight: 600; font-size: 13.5px; padding: 9px 17px; border-radius: 100px; background: #fff; color: var(--body); border: 1px solid var(--line-2); cursor: pointer; transition: .2s; }
   .chip:hover { color: var(--navy); border-color: var(--blue); }
   .chip.active { background: var(--brand); color: #fff; border-color: transparent; }
@@ -478,6 +493,13 @@
       <h2>Browse by what you're building.</h2>
       <p>Industrial buyers shop on spec, not pages. Filter by category, read the rating, and request a quote in one tap.</p>
     </div>
+    <div class="search-bar reveal">
+      <svg class="search-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.9"/><path d="m20 20-3.2-3.2" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+      <input id="prodSearch" type="search" placeholder="Search products — e.g. ceramic blanket, firebrick, 1260°C, gasket…" aria-label="Search products" autocomplete="off" />
+      <button id="searchClear" class="search-clear" aria-label="Clear search" hidden>
+        <svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
     <div class="filters reveal" id="filters">
       <button class="chip active" data-filter="all">All Products</button>
       <button class="chip" data-filter="insulation">Insulation</button>
@@ -486,7 +508,12 @@
       <button class="chip" data-filter="acoustic">Acoustic</button>
       <button class="chip" data-filter="electrical">Electrical</button>
     </div>
+    <p class="prod-count reveal" id="prodCount" aria-live="polite"></p>
     <div class="prod-grid" id="prodGrid"></div>
+    <div class="prod-empty" id="prodEmpty" hidden>
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.7"/><path d="m20 20-3.2-3.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      <p>No products match <b id="emptyTerm"></b>. Try another term, or <a href="https://wa.me/254722706416?text=Hi%20Kenworks%2C%20I%27m%20looking%20for%20a%20product%20I%20can%27t%20find%20on%20your%20site." target="_blank" rel="noopener">ask us on WhatsApp</a>.</p>
+    </div>
   </div>
 </section>
 
@@ -724,10 +751,26 @@
   ];
 
   const grid = document.getElementById('prodGrid');
+  const countEl = document.getElementById('prodCount');
+  const emptyEl = document.getElementById('prodEmpty');
+  const emptyTerm = document.getElementById('emptyTerm');
+  const searchInput = document.getElementById('prodSearch');
+  const searchClear = document.getElementById('searchClear');
   const isHot = t => { const n = parseInt(t); return !isNaN(n) && n >= 1200; };
-  function render(filter) {
-    grid.innerHTML = PRODUCTS
-      .filter(p => filter === 'all' || p.cat === filter)
+
+  let activeCat = 'all';
+  let query = '';
+
+  function render() {
+    const q = query.trim().toLowerCase();
+    const matches = PRODUCTS.filter(p => {
+      if (activeCat !== 'all' && p.cat !== activeCat) return false;
+      if (!q) return true;
+      return (p.name + ' ' + p.tag + ' ' + p.desc + ' ' + p.spec + ' ' + p.temp + ' ' + p.cat)
+        .toLowerCase().includes(q);
+    });
+
+    grid.innerHTML = matches
       .map(p => `
         <article class="prod">
           <div class="prod-img">
@@ -747,15 +790,43 @@
           </div>
         </article>`).join('');
     grid.querySelectorAll('.prod').forEach(el => el.classList.add('in'));
+
+    // Result count + empty state
+    const total = PRODUCTS.length;
+    emptyEl.hidden = matches.length > 0;
+    grid.style.display = matches.length ? '' : 'none';
+    if (!matches.length) {
+      emptyTerm.textContent = q ? `"${query.trim()}"` : 'that filter';
+      countEl.textContent = '';
+    } else if (q || activeCat !== 'all') {
+      countEl.innerHTML = `Showing <b>${matches.length}</b> of ${total} products`;
+    } else {
+      countEl.innerHTML = `<b>${total}</b> products in stock`;
+    }
   }
-  render('all');
+  render();
 
   document.getElementById('filters').addEventListener('click', e => {
     const chip = e.target.closest('.chip');
     if (!chip) return;
     document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
     chip.classList.add('active');
-    render(chip.dataset.filter);
+    activeCat = chip.dataset.filter;
+    render();
+  });
+
+  // Live product search
+  searchInput.addEventListener('input', () => {
+    query = searchInput.value;
+    searchClear.hidden = query.length === 0;
+    render();
+  });
+  searchClear.addEventListener('click', () => {
+    query = '';
+    searchInput.value = '';
+    searchClear.hidden = true;
+    searchInput.focus();
+    render();
   });
 
   document.getElementById('quoteForm').addEventListener('submit', e => {
