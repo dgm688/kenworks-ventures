@@ -6,6 +6,8 @@
 <title>Insulation, Refractory & Electrical Safety Materials in Nairobi, Kenya | Kenworks Ventures</title>
 <meta name="description" content="Kenworks Ventures Company Limited — Kenya's leading supplier of thermal & acoustic insulation, refractory materials rated up to 2000°C, electrical H.V insulating mats and generator servicing. Industrial Area, Nairobi. Keeping you powered up at all times." />
 <meta name="theme-color" content="#0e1a52" />
+<link rel="icon" type="image/png" href="images/logo-mark.png" />
+<link rel="apple-touch-icon" href="images/logo-mark.png" />
 
 <link rel="canonical" href="https://dgm688.github.io/kenworks-ventures/" />
 <meta property="og:type" content="website" />
@@ -44,6 +46,17 @@
   "openingHoursSpecification": [
     {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "08:00", "closes": "17:00"},
     {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "08:00", "closes": "13:00"}
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5.0",
+    "reviewCount": "6",
+    "bestRating": "5"
+  },
+  "review": [
+    {"@type": "Review", "author": {"@type": "Organization", "name": "Cube Interiors"}, "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"}, "reviewBody": "Customer service experience was out of this world. Loved every bit of the buying process."},
+    {"@type": "Review", "author": {"@type": "Person", "name": "Rickie Gitonga"}, "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"}, "reviewBody": "Loved the experience. Was able to find every material I needed at the same facility."},
+    {"@type": "Review", "author": {"@type": "Person", "name": "Daniel Muchiri"}, "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"}, "reviewBody": "Excellent customer service."}
   ],
   "priceRange": "Quote on request"
 }
@@ -136,7 +149,7 @@
   header.scrolled { border-bottom-color: var(--line); background: rgba(255,255,255,.94); box-shadow: 0 6px 24px -18px rgba(16,38,122,.5); }
   .nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
   .logo { display: flex; align-items: center; gap: 11px; }
-  .logo .emblem { width: 40px; height: 40px; }
+  .logo .emblem { width: 40px; height: 40px; object-fit: contain; }
   .logo .wordmark { display: flex; flex-direction: column; line-height: 1; white-space: nowrap; }
   .logo .wordmark b { font-family: 'Archivo'; font-weight: 900; font-size: 20px; letter-spacing: -0.02em; color: var(--navy); }
   .logo .wordmark small { font-family: 'Inter'; font-weight: 600; font-size: 9.5px; letter-spacing: 0.16em; color: var(--muted); text-transform: uppercase; margin-top: 3px; }
@@ -274,16 +287,21 @@
   .why h4 { font-size: 17px; margin-bottom: 9px; }
   .why p { font-size: 13.5px; color: var(--body); }
 
-  /* Social proof strip (placeholders) */
-  #proof { padding: 72px 0; }
+  /* Social proof — real Google reviews */
   .proof { text-align: center; }
-  .proof-since { font-family: 'Archivo'; font-weight: 800; font-size: clamp(20px, 2.6vw, 28px); color: var(--ink); letter-spacing: -0.02em; margin-bottom: 30px; }
-  .ph-inline { color: var(--blue); border-bottom: 2px dashed var(--line-2); padding-bottom: 1px; }
-  .proof-logos { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-bottom: 36px; }
-  .logo-slot { display: grid; place-items: center; width: 150px; height: 64px; border: 1.5px dashed var(--line-2); border-radius: 12px; color: var(--muted); font-size: 12.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; background: var(--bg-2); }
-  .proof-quote { max-width: 680px; margin: 0 auto; background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 30px 32px; box-shadow: var(--shadow-sm); }
-  .proof-quote p { font-size: 18px; color: var(--body); font-style: italic; margin-bottom: 14px; }
-  .proof-quote footer { font-family: 'Archivo'; font-weight: 700; font-size: 14px; color: var(--muted); }
+  .proof .eyebrow { margin-bottom: 16px; }
+  .proof-rating { display: inline-flex; align-items: center; gap: 8px; font-family: 'Archivo'; font-size: 17px; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: 100px; padding: 9px 18px; box-shadow: var(--shadow-sm); transition: transform .2s, box-shadow .2s; }
+  .proof-rating:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+  .proof-rating b { font-weight: 800; }
+  .proof-rating .rating-count { color: var(--muted); font-weight: 600; }
+  .stars { color: #f5b301; letter-spacing: 1px; }
+  .proof-h { font-size: clamp(26px, 3.4vw, 36px); margin: 22px 0 36px; }
+  .proof-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 30px; text-align: left; }
+  .proof-quote { background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 26px 26px 24px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; }
+  .proof-quote .stars { font-size: 15px; margin-bottom: 12px; }
+  .proof-quote p { font-size: 16px; color: var(--body); margin-bottom: 16px; flex: 1; }
+  .proof-quote footer { font-family: 'Archivo'; font-weight: 700; font-size: 14px; color: var(--ink); }
+  .proof-quote footer span { color: var(--muted); font-weight: 500; }
 
   /* Quote / contact */
   .quote-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items: start; }
@@ -315,8 +333,7 @@
   footer { background: var(--navy-3); color: #c3cef0; padding: 64px 0 30px; }
   .foot-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.1fr; gap: 40px; margin-bottom: 46px; }
   .foot-brand .logo .wordmark b { color: #fff; }
-  .foot-brand .logo .emblem { width: 42px; height: 42px; }
-  .foot-brand .logo .emblem .gear-navy { fill: #fff; }
+  .foot-brand .logo .emblem { width: 42px; height: 42px; background: #fff; border-radius: 9px; padding: 3px; }
   .foot-brand p { color: #93a1cf; font-size: 14px; margin: 18px 0 14px; max-width: 290px; }
   .foot-tag { font-style: italic; color: var(--sky); font-size: 13.5px; font-weight: 500; }
   .foot-col h5 { font-family: 'Archivo'; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: #fff; margin-bottom: 18px; }
@@ -338,6 +355,7 @@
     .hero-grid, .export, .quote-grid { grid-template-columns: 1fr; }
     .div-grid, .prod-grid { grid-template-columns: repeat(2, 1fr); }
     .why-grid { grid-template-columns: repeat(2, 1fr); }
+    .proof-cards { grid-template-columns: 1fr; }
     .foot-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
     .gauge-card { max-width: 480px; }
     .nav-links { display: none; }
@@ -369,33 +387,12 @@
 </head>
 <body>
 
-<!-- Reusable gear emblem -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <g id="kw-emblem">
-      <!-- big navy gear -->
-      <g class="gear-navy" transform="translate(25 38)">
-        <circle r="17" fill="none" stroke="var(--navy)" stroke-width="6.5" stroke-dasharray="5.2 4.4"/>
-        <circle r="13" />
-        <circle r="6.4" fill="#fff"/>
-        <path d="M-2.4 1.6a4.6 4.6 0 1 1 4.2-2.1l3 3-1.7 1.7-3-3a4.6 4.6 0 0 1-2.5.4Z" fill="var(--navy)"/>
-      </g>
-      <!-- small blue gear -->
-      <g class="gear-blue" transform="translate(45 21)">
-        <circle r="12" fill="none" stroke="var(--blue)" stroke-width="5" stroke-dasharray="4.2 3.6"/>
-        <circle r="9" />
-        <circle r="4.4" fill="#fff"/>
-        <path d="M-1.7 1.1a3.2 3.2 0 1 1 2.9-1.4l2 2-1.2 1.2-2-2a3.2 3.2 0 0 1-1.7.2Z" fill="var(--blue)"/>
-      </g>
-    </g>
-  </defs>
-</svg>
 
 <!-- HEADER -->
 <header id="top">
   <div class="wrap nav">
     <a href="#top" class="logo" aria-label="Kenworks Ventures home">
-      <svg class="emblem" viewBox="0 0 64 64" role="img" aria-label="Kenworks gear logo"><use href="#kw-emblem"/></svg>
+      <img class="emblem" src="images/logo-mark.png" alt="Kenworks Ventures Company Limited logo" width="40" height="40" />
       <span class="wordmark"><b>KENWORKS</b><small>Ventures Company Ltd</small></span>
     </a>
     <nav class="nav-links" id="navlinks">
@@ -601,26 +598,36 @@
   </div>
 </section>
 
-<!-- SOCIAL PROOF (placeholders — fill in real data, do not invent) -->
-<section class="section" id="proof">
+<!-- SOCIAL PROOF — real Google reviews (5.0, 6 reviews). Add more as they come in. -->
+<section class="section alt" id="proof">
   <div class="wrap proof reveal">
-    <p class="proof-since">Supplying East African industry since <span class="ph-inline">[founding&nbsp;year]</span></p>
-    <!-- TODO: replace [founding year] above with the company's real founding year -->
+    <span class="eyebrow" style="justify-content:center;">Trusted in Nairobi</span>
+    <a class="proof-rating" href="https://share.google/3vlNiXeFJ3wz4a3cJ" target="_blank" rel="noopener" aria-label="5.0 star rating from 6 Google reviews — read them on Google">
+      <span class="stars" aria-hidden="true">★★★★★</span>
+      <b>5.0</b> on Google
+      <span class="rating-count">· 6 reviews</span>
+    </a>
+    <h2 class="proof-h">What our customers say</h2>
 
-    <div class="proof-logos" aria-label="Client logos">
-      <!-- TODO: replace each slot below with a real client logo image element. Remove slots you don't need. -->
-      <span class="logo-slot">Client logo</span>
-      <span class="logo-slot">Client logo</span>
-      <span class="logo-slot">Client logo</span>
-      <span class="logo-slot">Client logo</span>
-      <span class="logo-slot">Client logo</span>
+    <div class="proof-cards">
+      <blockquote class="proof-quote">
+        <span class="stars" aria-hidden="true">★★★★★</span>
+        <p>“Customer service experience was out of this world. Loved every bit of the buying process.”</p>
+        <footer>— Cube Interiors <span>· Google review</span></footer>
+      </blockquote>
+      <blockquote class="proof-quote">
+        <span class="stars" aria-hidden="true">★★★★★</span>
+        <p>“Loved the experience. Was able to find every material I needed at the same facility.”</p>
+        <footer>— Rickie Gitonga <span>· Google Local Guide</span></footer>
+      </blockquote>
+      <blockquote class="proof-quote">
+        <span class="stars" aria-hidden="true">★★★★★</span>
+        <p>“Excellent customer service.”</p>
+        <footer>— Daniel Muchiri <span>· Google review</span></footer>
+      </blockquote>
     </div>
 
-    <!-- TODO: replace with a real customer testimonial — their words, name, company, town. Add more .proof-quote blocks as needed. -->
-    <blockquote class="proof-quote">
-      <p>“[ Add a genuine customer testimonial here. ]”</p>
-      <footer>— [Customer name], [Company], [Town]</footer>
-    </blockquote>
+    <a class="btn btn-ghost" href="https://share.google/3vlNiXeFJ3wz4a3cJ" target="_blank" rel="noopener" style="margin-top:6px;">Read all reviews on Google</a>
   </div>
 </section>
 
@@ -702,7 +709,7 @@
     <div class="foot-grid">
       <div class="foot-brand">
         <a href="#top" class="logo">
-          <svg class="emblem" viewBox="0 0 64 64" aria-hidden="true"><use href="#kw-emblem"/></svg>
+          <img class="emblem foot-emblem" src="images/logo-mark.png" alt="Kenworks Ventures logo" width="42" height="42" />
           <span class="wordmark"><b>KENWORKS</b><small style="color:#93a1cf">Ventures Company Ltd</small></span>
         </a>
         <p>Thermal &amp; acoustic insulation, refractory materials and generator servicing — supplied across Kenya and East Africa.</p>
@@ -730,6 +737,7 @@
         <a href="mailto:info@kenworksventures.co.ke">info@kenworksventures.co.ke</a>
         <a href="https://maps.app.goo.gl/Bhz9fL1tdx7s6SwA9" target="_blank" rel="noopener">Old Enterprise Rd, Hema House,<br/>Godown 8, Industrial Area, Nairobi</a>
         <p>P.O. Box 22750-00400, Nairobi</p>
+        <a href="https://share.google/3vlNiXeFJ3wz4a3cJ" target="_blank" rel="noopener">★ 5.0 on Google — read reviews</a>
       </div>
     </div>
     <div class="foot-bottom">

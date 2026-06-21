@@ -338,7 +338,7 @@ def header_html(prefix=".."):
     return f'''<header id="top">
   <div class="wrap nav">
     <a href="{prefix}/index.html" class="logo" aria-label="Kenworks Ventures home">
-      <svg class="emblem" viewBox="0 0 64 64" role="img" aria-label="Kenworks gear logo"><use href="#kw-emblem"/></svg>
+      <img class="emblem" src="{prefix}/images/logo-mark.png" alt="Kenworks Ventures Company Limited logo" width="40" height="40" />
       <span class="wordmark"><b>KENWORKS</b><small>Ventures Company Ltd</small></span>
     </a>
     <nav class="nav-links" id="navlinks">
@@ -362,7 +362,7 @@ def footer_html(prefix=".."):
     <div class="foot-grid">
       <div class="foot-brand">
         <a href="{prefix}/index.html" class="logo">
-          <svg class="emblem" viewBox="0 0 64 64" aria-hidden="true"><use href="#kw-emblem"/></svg>
+          <img class="emblem foot-emblem" src="{prefix}/images/logo-mark.png" alt="Kenworks Ventures logo" width="42" height="42" />
           <span class="wordmark"><b>KENWORKS</b><small style="color:#93a1cf">Ventures Company Ltd</small></span>
         </a>
         <p>Thermal &amp; acoustic insulation, refractory materials, electrical safety and generator servicing — supplied across Kenya and East Africa.</p>
@@ -507,7 +507,6 @@ def render_product(p):
 <link rel="stylesheet" href="product.css" />
 </head>
 <body>
-{emblem_defs()}
 {header_html("..")}
 
 <main>
@@ -623,7 +622,6 @@ def render_division(divkey):
 <link rel="stylesheet" href="product.css" />
 </head>
 <body>
-{emblem_defs()}
 {header_html("..")}
 
 <main>
@@ -662,7 +660,7 @@ ORG_JSONLD = {
     "@type": "Organization",
     "name": "Kenworks Ventures Company Limited",
     "url": f"{BASE}/",
-    "logo": f"{BASE}/images/firebrick-70.jpg",
+    "logo": f"{BASE}/images/logo.png",
     "telephone": "+254722706416",
     "email": EMAIL,
     "address": {
